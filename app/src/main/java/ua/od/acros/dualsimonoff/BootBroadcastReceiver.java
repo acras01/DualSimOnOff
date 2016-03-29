@@ -11,18 +11,17 @@ import org.joda.time.DateTime;
 
 public class BootBroadcastReceiver extends BroadcastReceiver {
 
-    private final String SIM1 = "sim1_sel";
-    private final String SIM2 = "sim2_sel";
-    private final String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
-
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
+
         SharedPreferences prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        DateTime alarmTime = new DateTime().withTimeAtStartOfDay();
-        if (prefs.getInt(SIM1, 3) == 0 ||
-                prefs.getInt(SIM1, 3) == 1) {
+        DateTime alarmTime;
+
+        if (prefs.getInt("sim1_sel", 0) == 1) {
             Intent i1Off = new Intent(context, OnOffReceiver.class);
             i1Off.putExtra("sim", "sim1");
             i1Off.putExtra("action", false);
@@ -35,9 +34,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
             if (alarmTime.getMillis() < System.currentTimeMillis())
                 alarmTime.plusDays(1);
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi1Off);
-        }
-        if (prefs.getInt(SIM1, 3) == 0 ||
-                prefs.getInt(SIM1, 3) == 2) {
+
             Intent i1On = new Intent(context, OnOffReceiver.class);
             i1On.putExtra("sim", "sim1");
             i1On.putExtra("action", true);
@@ -51,8 +48,8 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                 alarmTime.plusDays(1);
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi1On);
         }
-        if (prefs.getInt(SIM2, 3) == 0 ||
-                prefs.getInt(SIM2, 3) == 1) {
+
+        if (prefs.getInt("sim2_sel", 0) == 1) {
             Intent i2Off = new Intent(context, OnOffReceiver.class);
             i2Off.putExtra("sim", "sim1");
             i2Off.putExtra("action", false);
@@ -65,9 +62,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
             if (alarmTime.getMillis() < System.currentTimeMillis())
                 alarmTime.plusDays(1);
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi2Off);
-        }
-        if (prefs.getInt(SIM2, 3) == 0 ||
-                prefs.getInt(SIM2, 3) == 2) {
+
             Intent i2On = new Intent(context, OnOffReceiver.class);
             i2On.putExtra("sim", "sim1");
             i2On.putExtra("action", true);
