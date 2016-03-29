@@ -46,8 +46,8 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
         sim1 = (AppCompatSpinner) view.findViewById(R.id.sim1);
         AppCompatSpinner sim2 = (AppCompatSpinner) view.findViewById(R.id.sim2);
         prefs = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        sim1.setSelection(prefs.getInt(SIM1, 3));
-        sim2.setSelection(prefs.getInt(SIM2, 3));
+        sim1.setSelection(prefs.getInt(SIM1, 0));
+        sim2.setSelection(prefs.getInt(SIM2, 0));
         b1 = (AppCompatButton) view.findViewById(R.id.sim1on);
         b2 = (AppCompatButton) view.findViewById(R.id.sim1off);
         b3 = (AppCompatButton) view.findViewById(R.id.sim2on);
@@ -56,11 +56,11 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
         b2.setEnabled(false);
         b3.setEnabled(false);
         b4.setEnabled(false);
-        if (prefs.getInt(SIM1, 3) == 1) {
+        if (prefs.getInt(SIM1, 0) == 1) {
             b1.setEnabled(true);
             b2.setEnabled(true);
         }
-        if (prefs.getInt(SIM2, 3) == 1) {
+        if (prefs.getInt(SIM2, 0) == 1) {
             b3.setEnabled(true);
             b4.setEnabled(true);
         }
@@ -153,7 +153,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             i1Off.setAction(ALARM_ACTION);
             final int SIM1_OFF = 100;
             PendingIntent pi1Off = PendingIntent.getBroadcast(getActivity(), SIM1_OFF, i1Off, 0);
-            if (sharedPreferences.getInt(SIM1, 1) == 1) {
+            if (sharedPreferences.getInt(SIM1, 0) == 1) {
                 am.cancel(pi1Off);
                 alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim1off_time", "23:55").split(":")[0]))
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1off_time", "23:55").split(":")[1]))
@@ -170,7 +170,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             i1On.setAction(ALARM_ACTION);
             final int SIM1_ON = 101;
             PendingIntent pi1On = PendingIntent.getBroadcast(getActivity(), SIM1_ON, i1On, 0);
-            if (sharedPreferences.getInt(SIM1, 1) == 1) {
+            if (sharedPreferences.getInt(SIM1, 0) == 1) {
                 am.cancel(pi1On);
                 alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[0]))
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[1]))
@@ -188,7 +188,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             i2Off.setAction(ALARM_ACTION);
             final int SIM2_OFF = 200;
             PendingIntent pi2Off = PendingIntent.getBroadcast(getActivity(), SIM2_OFF, i2Off, 0);
-            if (sharedPreferences.getInt(SIM2, 1) == 1) {
+            if (sharedPreferences.getInt(SIM2, 0) == 1) {
                 am.cancel(pi2Off);
                 alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim2off_time", "23:55").split(":")[0]))
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim2off_time", "23:55").split(":")[1]))
@@ -205,7 +205,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             i2On.setAction(ALARM_ACTION);
             final int SIM2_ON = 201;
             PendingIntent pi2On = PendingIntent.getBroadcast(getActivity(), SIM2_ON, i2On, 0);
-            if (sharedPreferences.getInt(SIM2, 1) == 1) {
+            if (sharedPreferences.getInt(SIM2, 0) == 1) {
                 am.cancel(pi2On);
                 alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[0]))
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[1]))
