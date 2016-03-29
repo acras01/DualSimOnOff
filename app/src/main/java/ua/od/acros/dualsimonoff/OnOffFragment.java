@@ -146,7 +146,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         DateTime alarmTime;
-        if ((key.equals(SIM1) && prefs.contains("sim1off_time")) || key.equals("sim1off_time")) {
+        if ((key.equals(SIM1) && sharedPreferences.contains("sim1off_time")) || key.equals("sim1off_time")) {
             Intent i1Off = new Intent(getActivity(), OnOffReceiver.class);
             i1Off.putExtra("sim", "sim1");
             i1Off.putExtra("action", false);
@@ -164,7 +164,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             } else
                 am.cancel(pi1Off);
         }
-        if ((key.equals(SIM1) && prefs.contains("sim1on_time")) || key.equals("sim1on_time")) {
+        if ((key.equals(SIM1) && sharedPreferences.contains("sim1on_time")) || key.equals("sim1on_time")) {
             Intent i1On = new Intent(getActivity(), OnOffReceiver.class);
             i1On.putExtra("sim", "sim1");
             i1On.putExtra("action", true);
@@ -182,7 +182,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             } else
                 am.cancel(pi1On);
         }
-        if ((key.equals(SIM2) && prefs.contains("sim2off_time")) || key.equals("sim2off_time")) {
+        if ((key.equals(SIM2) && sharedPreferences.contains("sim2off_time")) || key.equals("sim2off_time")) {
             Intent i2Off = new Intent(getActivity(), OnOffReceiver.class);
             i2Off.putExtra("sim", "sim2");
             i2Off.putExtra("action", false);
@@ -200,7 +200,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             } else
                 am.cancel(pi2Off);
         }
-        if ((key.equals(SIM2) && prefs.contains("sim2on_time")) || key.equals("sim2on_time")) {
+        if ((key.equals(SIM2) && sharedPreferences.contains("sim2on_time")) || key.equals("sim2on_time")) {
             Intent i2On = new Intent(getActivity(), OnOffReceiver.class);
             i2On.putExtra("sim", "sim2");
             i2On.putExtra("action", true);
