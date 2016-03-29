@@ -26,7 +26,6 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
 
     private final String SIM1 = "sim1_sel";
     private final String SIM2 = "sim2_sel";
-    private final String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
 
     public OnOffFragment() {
     }
@@ -146,6 +145,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         DateTime alarmTime;
+        final String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
         if ((key.equals(SIM1) && sharedPreferences.contains("sim1off_time")) || key.equals("sim1off_time")) {
             Intent i1Off = new Intent(getActivity(), OnOffReceiver.class);
             i1Off.putExtra("sim", "sim1");

@@ -14,7 +14,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
+        final String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
 
         SharedPreferences prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
