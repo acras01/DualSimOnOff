@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DualSimOnOff.iml" filepath="$PROJECT_DIR$/DualSimOnOff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RootShell/RootShell.iml" filepath="$PROJECT_DIR$/RootShell/RootShell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acra/acra.iml" filepath="$PROJECT_DIR$/acra/acra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/joda-time-2.8.2/joda-time-2.8.2.iml" filepath="$PROJECT_DIR$/joda-time-2.8.2/joda-time-2.8.2.iml" />
+    </modules>
+  </component>
+</project>

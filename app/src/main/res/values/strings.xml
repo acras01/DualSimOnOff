@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DualSimOnOff</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main">DualSIM scheduled ON/OFF</string>
+    <string name="sim_fragment">SIM settings</string>
+    <string name="onoff_fragment">ON/OFF settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="crash_toast_text">Send error log to developer?</string>
+    <string name="crash_toast_text_ok">Sending error log to developer...</string>
+</resources>

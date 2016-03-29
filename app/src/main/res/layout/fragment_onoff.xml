@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="SIM1"
+            android:id="@+id/sim1title"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sim1"
+            android:entries="@array/onoff"
+            android:layout_below="@+id/sim1title"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On"
+            android:id="@+id/sim1on"
+            android:layout_below="@+id/sim1"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Off"
+            android:id="@+id/sim1off"
+            android:layout_below="@+id/sim1on"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="SIM2"
+            android:id="@+id/sim2title"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sim2"
+            android:entries="@array/onoff"
+            android:layout_below="@+id/sim2title"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On"
+            android:id="@+id/sim2on"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/sim2" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Off"
+            android:id="@+id/sim2off"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/sim2on" />
+
+    </RelativeLayout>
+
+</TableRow>
