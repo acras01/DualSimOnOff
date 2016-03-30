@@ -20,6 +20,8 @@ public class OnOffReceiver extends BroadcastReceiver {
         String sim = intent.getStringExtra("sim");
         boolean action = intent.getBooleanExtra("action", true);
         boolean[] simState = MobileUtils.getSimState(context);
+        prefs.edit().putBoolean("sim1_state", simState[0]).apply();
+        prefs.edit().putBoolean("sim2_state", simState[1]).apply();
         int mode = 0;
         switch (sim) {
             case "sim1":
@@ -34,6 +36,7 @@ public class OnOffReceiver extends BroadcastReceiver {
                     else
                         mode = prefs.getInt("off", 0);
                 }
+                prefs.edit().putBoolean("sim1_state", action).apply();
                 break;
             case "sim2":
                 if (simState[0]) {
@@ -47,6 +50,7 @@ public class OnOffReceiver extends BroadcastReceiver {
                     else
                         mode = prefs.getInt("off", 0);
                 }
+                prefs.edit().putBoolean("sim2_state", action).apply();
                 break;
         }
         Intent localIntent;

@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.provider.Settings;
 
 import org.joda.time.DateTime;
 
@@ -76,5 +78,30 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                 alarmTime.plusDays(1);
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi2On);
         }
+
+        boolean sim1 = prefs.getBoolean("sim1_state", true);
+        boolean sim2 = prefs.getBoolean("sim2_state", true);
+        int mode;
+        if (sim1) {
+            if (sim2)
+                mode = 3;
+            else
+                mode = 1;
+        } else {
+            if (sim2)
+                mode = 2;
+            else
+                mode = 0;
+        }
+        Intent localIntent;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Settings.System.putInt(context.getContentResolver(), "dual_sim_mode_setting", mode);
+            localIntent = new Intent("android.intent.action.DUAL_SIM_MODE");
+        } else {
+            Settings.System.putInt(context.getContentResolver(), "msim_mode_setting", mode);
+            localIntent = new Intent("android.intent.action.MSIM_MODE");
+        }
+        localIntent.putExtra("mode", mode);
+        context.sendBroadcast(localIntent);
     }
 }
