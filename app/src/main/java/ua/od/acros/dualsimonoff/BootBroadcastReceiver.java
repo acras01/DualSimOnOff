@@ -84,14 +84,14 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         int mode;
         if (sim1) {
             if (sim2)
-                mode = 3;
+                mode = prefs.getInt("on", 0);
             else
-                mode = 1;
+                mode = prefs.getInt("sim1", 0);
         } else {
             if (sim2)
-                mode = 2;
+                mode = prefs.getInt("sim2", 0);
             else
-                mode = 0;
+                mode = prefs.getInt("off", 0);
         }
         Intent localIntent;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
