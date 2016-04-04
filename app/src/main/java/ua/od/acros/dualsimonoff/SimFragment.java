@@ -44,9 +44,9 @@ public class SimFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         String key = "";
+        input = Integer.valueOf(mEditText.getText().toString());
         switch (v.getId()) {
             case R.id.button:
-                input = Integer.valueOf(mEditText.getText().toString());
                 Intent localIntent;
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     Settings.System.putInt(getActivity().getContentResolver(), "dual_sim_mode_setting", input);

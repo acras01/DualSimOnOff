@@ -159,7 +159,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1off_time", "23:55").split(":")[1]))
                         .withSecondOfMinute(0);
                 if (alarmTime.getMillis() < System.currentTimeMillis())
-                    alarmTime.plusDays(1);
+                    alarmTime = alarmTime.plusDays(1);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi1Off);
             } else
                 am.cancel(pi1Off);
@@ -177,7 +177,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[1]))
                         .withSecondOfMinute(0);
                 if (alarmTime.getMillis() < System.currentTimeMillis())
-                    alarmTime.plusDays(1);
+                    alarmTime = alarmTime.plusDays(1);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi1On);
             } else
                 am.cancel(pi1On);
@@ -195,7 +195,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
                         .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim2off_time", "23:55").split(":")[1]))
                         .withSecondOfMinute(0);
                 if (alarmTime.getMillis() < System.currentTimeMillis())
-                    alarmTime.plusDays(1);
+                    alarmTime = alarmTime.plusDays(1);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi2Off);
             } else
                 am.cancel(pi2Off);
@@ -209,11 +209,11 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             PendingIntent pi2On = PendingIntent.getBroadcast(getActivity(), SIM2_ON, i2On, 0);
             if (sharedPreferences.getInt(SIM2, 0) == 1) {
                 am.cancel(pi2On);
-                alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[0]))
-                        .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim1on_time", "00:05").split(":")[1]))
+                alarmTime = new DateTime().withHourOfDay(Integer.valueOf(sharedPreferences.getString("sim2on_time", "00:05").split(":")[0]))
+                        .withMinuteOfHour(Integer.valueOf(sharedPreferences.getString("sim2on_time", "00:05").split(":")[1]))
                         .withSecondOfMinute(0);
                 if (alarmTime.getMillis() < System.currentTimeMillis())
-                    alarmTime.plusDays(1);
+                    alarmTime = alarmTime.plusDays(1);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getMillis(), AlarmManager.INTERVAL_DAY, pi2On);
             } else
                 am.cancel(pi2On);
