@@ -19,7 +19,7 @@ public class OnOffReceiver extends BroadcastReceiver {
         SharedPreferences prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String sim = intent.getStringExtra("sim");
         boolean action = intent.getBooleanExtra("action", true);
-        boolean[] simState = MobileUtils.getSimState(context);
+        boolean[] simState = MobileUtils.getSimState(context.getApplicationContext());
         prefs.edit().putBoolean("sim1_state", simState[0]).apply();
         prefs.edit().putBoolean("sim2_state", simState[1]).apply();
         int mode = 0;
