@@ -25,7 +25,7 @@
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />
 
-    <android.support.v4.widget.TextViewCompat
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -86,7 +86,7 @@
         </TableRow>
     </TableLayout>
 
-    <android.support.v4.widget.TextViewCompat
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="sim1"
@@ -95,7 +95,7 @@
         android:layout_toLeftOf="@+id/editText"
         android:paddingTop="50dp" />
 
-    <android.support.v4.widget.TextViewCompat
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="sim2"
