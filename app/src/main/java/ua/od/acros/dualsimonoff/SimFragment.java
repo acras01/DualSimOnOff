@@ -2,9 +2,9 @@ package ua.od.acros.dualsimonoff;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.concurrent.TimeUnit;
 
 public class SimFragment extends Fragment implements View.OnClickListener {
 
@@ -49,28 +47,24 @@ public class SimFragment extends Fragment implements View.OnClickListener {
         TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         tm.listen(new PhoneStateListener() {
 
-            class SimStateTask extends AsyncTask<Void, Void, boolean[]> {
-                @Override
-                protected boolean[] doInBackground(Void... params) {
-                    try {
-                        TimeUnit.SECONDS.sleep(2000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                   return MobileUtils.getSimState(getActivity().getApplicationContext());
-                }
-
-                @Override
-                protected void onPostExecute(boolean[] result) {
-                    sim1.setText(result[0] ? "On" : "Off");
-                    sim2.setText(result[1] ? "On" : "Off");
-                }
-            }
-
             @Override
             public void onServiceStateChanged(ServiceState serviceState) {
                 super.onServiceStateChanged(serviceState);
-                new SimStateTask().execute();
+                new CountDownTimer(1000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        try {
+                            boolean[] simState = MobileUtils.getSimState(getActivity().getApplicationContext());
+                            sim1.setText(simState[0] ? "On" : "Off");
+                            sim2.setText(simState[1] ? "On" : "Off");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
         }, PhoneStateListener.LISTEN_SERVICE_STATE);
         return view;
