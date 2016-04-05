@@ -7,15 +7,18 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.telephony.PhoneStateListener;
+import android.telephony.ServiceState;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class SimFragment extends Fragment implements View.OnClickListener {
 
     private AppCompatEditText mEditText;
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private int input;
 
     public SimFragment() {
     }
@@ -38,13 +41,24 @@ public class SimFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.only2).setOnClickListener(this);
         view.findViewById(R.id.bothoff).setOnClickListener(this);
         view.findViewById(R.id.bothon).setOnClickListener(this);
+        final TextView sim1 = (TextView) view.findViewById(R.id.sim1State);
+        final TextView sim2 = (TextView) view.findViewById(R.id.sim2State);
+        TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        tm.listen(new PhoneStateListener() {
+            @Override
+            public void onServiceStateChanged(ServiceState serviceState) {
+                super.onServiceStateChanged(serviceState);
+                sim1.setText(String.valueOf(MobileUtils.getSimState(getActivity())[0]));
+                sim2.setText(String.valueOf(MobileUtils.getSimState(getActivity())[1]));
+            }
+        }, PhoneStateListener.LISTEN_SERVICE_STATE);
         return view;
     }
 
     @Override
     public void onClick(View v) {
         String key = "";
-        input = Integer.valueOf(mEditText.getText().toString());
+        int input = Integer.valueOf(mEditText.getText().toString());
         switch (v.getId()) {
             case R.id.button:
                 Intent localIntent;

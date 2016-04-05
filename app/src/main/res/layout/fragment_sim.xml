@@ -25,7 +25,7 @@
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <android.support.v4.widget.TextViewCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -85,5 +85,23 @@
                 android:layout_weight=".5" />
         </TableRow>
     </TableLayout>
+
+    <android.support.v4.widget.TextViewCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sim1"
+        android:id="@+id/sim1State"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_toLeftOf="@+id/editText"
+        android:paddingTop="50dp" />
+
+    <android.support.v4.widget.TextViewCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sim2"
+        android:id="@+id/sim2State"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_toRightOf="@+id/editText"
+        android:paddingTop="50dp" />
 
 </RelativeLayout>
