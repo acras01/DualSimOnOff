@@ -58,8 +58,13 @@ public class SimFragment extends Fragment implements View.OnClickListener {
                     public void onFinish() {
                         try {
                             boolean[] simState = MobileUtils.getSimState(getActivity().getApplicationContext());
-                            sim1.setText(simState[0] ? "On" : "Off");
-                            sim2.setText(simState[1] ? "On" : "Off");
+                            if (simState != null) {
+                                sim1.setText(simState[0] ? "On" : "Off");
+                                sim2.setText(simState[1] ? "On" : "Off");
+                            } else {
+                                sim1.setText("Unknown");
+                                sim2.setText("Unknown");
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

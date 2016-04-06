@@ -58,17 +58,17 @@ public class CustomApplication extends Application {
         mIsActivityVisible = false;
     }
 
-    public static boolean isScreenOn(Context context) {
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+    public static boolean isScreenOn() {
+        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1)
             return pm.isInteractive();
         else
             return pm.isScreenOn();
     }
 
-    public static boolean isMyServiceRunning(Class<?> serviceClass, Context context) {
+    public static boolean isMyServiceRunning(Class<?> serviceClass) {
         try {
-            ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
                 if (serviceClass.getName().equals(service.service.getClassName()))
                     return true;
@@ -79,9 +79,9 @@ public class CustomApplication extends Application {
         return false;
     }
 
-    public static boolean isPackageExisted(Context context, String targetPackage){
+    public static boolean isPackageExisted(String targetPackage){
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
+            PackageInfo info = mContext.getPackageManager().getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }

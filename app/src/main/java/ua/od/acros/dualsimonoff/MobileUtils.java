@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MobileUtils {
@@ -45,7 +44,7 @@ public class MobileUtils {
     }
 
     public static boolean[] getSimState(Context context) {
-        boolean[] sim = new boolean[]{false, false};
+       boolean[] sim = null;
         if (context != null) {
             String out = " ";
             final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -81,11 +80,11 @@ public class MobileUtils {
                                 e.printStackTrace();
                             }
                         }
-                        if (state == TelephonyManager.SIM_STATE_READY) {
-                            sim[i] = true;
-                            i++;
-                            out = "getSimStateFromTM " + sim[i];
-                        }
+                        if (sim == null)
+                            sim = new boolean[]{false, false};
+                        sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                        i++;
+                        out = "getSimStateFromTM " + sim[i];
                     }
                 }
             } else {
@@ -109,12 +108,12 @@ public class MobileUtils {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                if (state == TelephonyManager.SIM_STATE_READY) {
-                                    sim[i] = true;
-                                    out = "getDataStateExInt " + sim[i];
-                                }
+                                if (sim == null)
+                                    sim = new boolean[]{false, false};
+                                sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                                out = "getSimStateExInt " + sim[i];
                             }
-                            if (Arrays.equals(sim, new boolean[]{false, false})) {
+                            if (sim == null) {
                                 for (int i = 0; i < simQuantity; i++) {
                                     int state = -1;
                                     try {
@@ -133,14 +132,14 @@ public class MobileUtils {
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                    if (state == TelephonyManager.SIM_STATE_READY) {
-                                        sim[i] = true;
-                                        out = "getDataStateExLong " + sim[i];
-                                    }
+                                    if (sim == null)
+                                        sim = new boolean[]{false, false};
+                                    sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                                    out = "getSimStateExLong " + sim[i];
                                 }
                             }
                         }
-                        if (Arrays.equals(sim, new boolean[]{false, false})) {
+                        if (sim == null) {
                             for (int i = 0; i < simQuantity; i++) {
                                 int state = -1;
                                 try {
@@ -159,13 +158,13 @@ public class MobileUtils {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                if (state == TelephonyManager.SIM_STATE_READY) {
-                                    sim[i] = true;
-                                    out = "getDataStateSubId " + sim[i];
-                                }
+                                if (sim == null)
+                                    sim = new boolean[]{false, false};
+                                sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                                out = "getSimStateSubId " + sim[i];
                             }
                         }
-                        if (Arrays.equals(sim, new boolean[]{false, false})) {
+                        if (sim == null) {
                             for (int i = 0; i < simQuantity; i++) {
                                 int state = -1;
                                 try {
@@ -183,13 +182,13 @@ public class MobileUtils {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                if (state == TelephonyManager.SIM_STATE_READY) {
-                                    sim[i] = true;
-                                    out = "getDataStateExt " + sim[i];
-                                }
+                                if (sim == null)
+                                    sim = new boolean[]{false, false};
+                                sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                                out = "getSimStateExt " + sim[i];
                             }
                         }
-                        if (Arrays.equals(sim, new boolean[]{false, false})) {
+                        if (sim == null) {
                             for (int i = 0; i < simQuantity; i++) {
                                 int state = -1;
                                 try {
@@ -211,14 +210,14 @@ public class MobileUtils {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                if (state == TelephonyManager.SIM_STATE_READY) {
-                                    sim[i] = true;
-                                    out = "getITelephony " + sim[i];
-                                }
+                                if (sim == null)
+                                    sim = new boolean[]{false, false};
+                                sim[i] = state == TelephonyManager.SIM_STATE_READY;
+                                out = "getITelephony " + sim[i];
                             }
                         }
 
-                        if (Arrays.equals(sim, new boolean[]{false, false})) {
+                        if (sim == null) {
                             for (int i = 0; i < simQuantity; i++) {
                                 try {
                                     int state = -1;
@@ -235,6 +234,8 @@ public class MobileUtils {
                                             }
                                         }
                                     }
+                                    if (sim == null)
+                                        sim = new boolean[] {false, false};
                                     if (state == TelephonyManager.SIM_STATE_READY) {
                                         sim[i] = true;
                                         out = "TelephonyManager.from " + sim[i];
