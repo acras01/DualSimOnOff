@@ -99,6 +99,7 @@ public class CustomApplication extends Application {
                     "mt8377",
                     // Quad-core SoC
                     "mt6582",
+                    "mt6582m",
                     "mt6589",
                     "mt8389",
                     // Octa-core SoC
