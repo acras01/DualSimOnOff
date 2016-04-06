@@ -110,7 +110,9 @@ public class CustomApplication extends Application {
     public static boolean isOldMtkDevice() {
         if (mIsOldMtkDevice != null)
             return mIsOldMtkDevice;
-        mIsOldMtkDevice = OLD_MTK_DEVICES.contains(Build.HARDWARE.toLowerCase());
+        mIsOldMtkDevice = OLD_MTK_DEVICES.contains(Build.HARDWARE.toLowerCase()) ||
+                OLD_MTK_DEVICES.contains(System.getProperty("ro.mediatek.platform", "")) ||
+                OLD_MTK_DEVICES.contains(System.getProperty("ro.board.platform", ""));
         return mIsOldMtkDevice;
     }
 
