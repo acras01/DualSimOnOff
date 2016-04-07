@@ -49,7 +49,7 @@ public class MobileUtils {
     public static boolean[] getSimState(Context context) {
         boolean[] sim = null;
         if (context != null) {
-            String out = " ";
+            String out = "";
             final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (mTMClass == null)
                 try {
@@ -86,7 +86,7 @@ public class MobileUtils {
                             sim = new boolean[]{false, false};
                         sim[i] = state == TelephonyManager.SIM_STATE_READY;
                         i++;
-                        out = "getSimStateFromTM " + sim[i];
+                        out += "getSimStateFromTM " + i + " " + sim[i] + "\n";
                     }
                 }
             } else {
@@ -116,7 +116,7 @@ public class MobileUtils {
                                 if (sim == null)
                                     sim = new boolean[]{false, false};
                                 sim[i] = state == TelephonyManager.SIM_STATE_READY;
-                                out = "getSimStateExInt " + sim[i];
+                                out += "getSimStateExInt " + i + " " + sim[i] + "\n";
                             }
                             if (sim == null) {
                                 for (int i = 0; i < simQuantity; i++) {
@@ -143,7 +143,7 @@ public class MobileUtils {
                                     if (sim == null)
                                         sim = new boolean[]{false, false};
                                     sim[i] = state == TelephonyManager.SIM_STATE_READY;
-                                    out = "getSimStateExLong " + sim[i];
+                                    out += "getSimStateExLong " + i + " " + sim[i] + "\n";
                                 }
                             }
                         }
@@ -173,7 +173,7 @@ public class MobileUtils {
                                 if (sim == null)
                                     sim = new boolean[]{false, false};
                                 sim[i] = state == TelephonyManager.SIM_STATE_READY;
-                                out = "getSimStateSubId " + sim[i];
+                                out += "getSimStateSubId " + i + " " + sim[i] + "\n";
                             }
                         }
                         if (sim == null) {
@@ -200,7 +200,7 @@ public class MobileUtils {
                                 if (sim == null)
                                     sim = new boolean[]{false, false};
                                 sim[i] = state == TelephonyManager.SIM_STATE_READY;
-                                out = "getSimStateExt " + sim[i];
+                                out += "getSimStateExt " + i + " " + sim[i] + "\n";
                             }
                         }
                         if (sim == null) {
@@ -228,7 +228,7 @@ public class MobileUtils {
                                 if (sim == null)
                                     sim = new boolean[]{false, false};
                                 sim[i] = state == TelephonyManager.SIM_STATE_READY;
-                                out = "getITelephony " + sim[i];
+                                out += "getITelephony " + i + " " + sim[i] + "\n";
                             }
                         }
 
@@ -253,7 +253,7 @@ public class MobileUtils {
                                         sim = new boolean[]{false, false};
                                     if (state == TelephonyManager.SIM_STATE_READY) {
                                         sim[i] = true;
-                                        out = "TelephonyManager.from " + sim[i];
+                                        out += "TelephonyManager.from " + i + " " + sim[i] + "\n";
                                         break;
                                     }
                                 } catch (Exception e) {
@@ -270,7 +270,7 @@ public class MobileUtils {
                 // create the file in which we will write the contents
                 String fileName = "sim_log.txt";
                 File file = new File(dir, fileName);
-                FileOutputStream os = new FileOutputStream(file);
+                FileOutputStream os = new FileOutputStream(file, true);
                 os.write(out.getBytes());
                 os.close();
             } catch (IOException e) {
