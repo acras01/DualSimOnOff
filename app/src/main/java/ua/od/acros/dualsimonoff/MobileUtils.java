@@ -1,26 +1,24 @@
 package ua.od.acros.dualsimonoff;
 
 import android.content.Context;
-import android.telephony.SubscriptionInfo;
-import android.telephony.SubscriptionManager;
-import android.telephony.TelephonyManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MobileUtils {
 
     private static final String MEDIATEK = "com.mediatek.telephony.TelephonyManagerEx";
     private static final String GET_SIM_STATE = "getSimState";
     private static final String GET_SUBID = "getSubIdBySlot";
+    private static final String GET_NAME = "getNetworkOperator";
     private static int simQuantity = 2;
     private static Method mGetSimState = null;
     private static ArrayList<Long> mSubIds = null;
     private static Class<?> mTMClass = null;
+    private static Method mGetNetworkOperator = null;
 
     private static ArrayList<Long> getSubIds(Method[] methods, Context context, Class<?> telephony) {
         ArrayList<Long> subIds = new ArrayList<>();
@@ -50,7 +48,33 @@ public class MobileUtils {
         boolean[] sim = null;
         if (context != null) {
             String out = "";
-            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            for (int i = 0; i < simQuantity; i++) {
+                String name = null;
+                try {
+                    Class<?> c = Class.forName(MEDIATEK);
+                    if (mGetNetworkOperator == null) {
+                        Method[] cm = c.getDeclaredMethods();
+                        for (Method m : cm) {
+                            if (m.getName().equalsIgnoreCase(GET_NAME)) {
+                                m.setAccessible(true);
+                                if (m.getParameterTypes().length > 0) {
+                                    mGetNetworkOperator = m;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    name = (String) mGetNetworkOperator.invoke(c.getConstructor(android.content.Context.class).newInstance(context), i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (sim == null)
+                    sim = new boolean[]{false, false};
+                sim[i] = name != null && !name.equals("");
+                out += "getNetworkOperatorExInt " + i + " " + sim[i] + "\n";
+            }
+
+            /*final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (mTMClass == null)
                 try {
                     mTMClass = Class.forName(tm.getClass().getName());
@@ -263,7 +287,7 @@ public class MobileUtils {
                         }
                     }
                 }
-            }
+            }*/
             try {
                 // to this path add a new directory path
                 File dir = new File(String.valueOf(context.getFilesDir()));

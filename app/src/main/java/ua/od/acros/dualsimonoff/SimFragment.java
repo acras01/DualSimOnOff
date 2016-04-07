@@ -175,7 +175,7 @@ public class SimFragment extends Fragment implements View.OnClickListener {
                 break;
         }
         if (!key.equals("")) {
-            getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE)
+            getActivity().getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE)
                     .edit()
                     .putInt(key, input)
                     .apply();

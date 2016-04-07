@@ -44,7 +44,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
         View view = inflater.inflate(R.layout.fragment_onoff, container, false);
         sim1 = (AppCompatSpinner) view.findViewById(R.id.sim1);
         AppCompatSpinner sim2 = (AppCompatSpinner) view.findViewById(R.id.sim2);
-        prefs = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
         sim1.setSelection(prefs.getInt(SIM1, 0));
         sim2.setSelection(prefs.getInt(SIM2, 0));
         b1 = (AppCompatButton) view.findViewById(R.id.sim1on);

@@ -30,7 +30,7 @@ public class TimePickerDialog extends DialogFragment {
         String sim = getArguments().getString("sim");
         boolean action = getArguments().getBoolean("action");
         final String[] pref = new String[1];
-        final SharedPreferences prefs = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        final SharedPreferences prefs = getActivity().getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
         if (sim != null)
             switch (sim) {
                 case "sim1":

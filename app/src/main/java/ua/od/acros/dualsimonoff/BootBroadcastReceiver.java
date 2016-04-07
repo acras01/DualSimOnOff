@@ -18,7 +18,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
 
         final String ALARM_ACTION = "ua.od.acros.dualsimonoff.ALARM";
 
-        SharedPreferences prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         DateTime alarmTime;

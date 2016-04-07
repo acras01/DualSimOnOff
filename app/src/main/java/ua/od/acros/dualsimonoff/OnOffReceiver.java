@@ -16,7 +16,7 @@ public class OnOffReceiver extends BroadcastReceiver {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
 
-        SharedPreferences prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
         String sim = intent.getStringExtra("sim");
         boolean action = intent.getBooleanExtra("action", true);
         boolean[] simState = MobileUtils.getSimState(context.getApplicationContext());
