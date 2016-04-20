@@ -77,7 +77,7 @@ public class MobileUtils {
             /*final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (mTMClass == null)
                 try {
-                    mTMClass = Class.forName(tm.getClass().getName());
+                    mTMClass = Class.forName(tm.getClass().getIndex());
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -86,7 +86,7 @@ public class MobileUtils {
                 if (mTMClass != null) {
                     tcm = mTMClass.getDeclaredMethods();
                     for (Method m : tcm) {
-                        if (m.getName().equalsIgnoreCase(GET_SIM_STATE)) {
+                        if (m.getIndex().equalsIgnoreCase(GET_SIM_STATE)) {
                             m.setAccessible(true);
                             if (m.getParameterTypes().length > 0) {
                                 mGetSimState = m;
@@ -124,7 +124,7 @@ public class MobileUtils {
                                     if (mGetSimState == null) {
                                         Method[] cm = c.getDeclaredMethods();
                                         for (Method m : cm) {
-                                            if (m.getName().equalsIgnoreCase(GET_SIM_STATE)) {
+                                            if (m.getIndex().equalsIgnoreCase(GET_SIM_STATE)) {
                                                 m.setAccessible(true);
                                                 if (m.getParameterTypes().length > 0) {
                                                     mGetSimState = m;
@@ -150,7 +150,7 @@ public class MobileUtils {
                                         if (mGetSimState == null) {
                                             Method[] cm = c.getDeclaredMethods();
                                             for (Method m : cm) {
-                                                if (m.getName().equalsIgnoreCase(GET_SIM_STATE)) {
+                                                if (m.getIndex().equalsIgnoreCase(GET_SIM_STATE)) {
                                                     m.setAccessible(true);
                                                     m.getParameterTypes();
                                                     if (m.getParameterTypes().length > 0) {
@@ -180,7 +180,7 @@ public class MobileUtils {
                                         if (mSubIds == null)
                                             mSubIds = getSubIds(cm, context, mTMClass);
                                         for (Method m : cm) {
-                                            if (m.getName().equalsIgnoreCase(GET_SIM_STATE)) {
+                                            if (m.getIndex().equalsIgnoreCase(GET_SIM_STATE)) {
                                                 m.setAccessible(true);
                                                 m.getParameterTypes();
                                                 if (m.getParameterTypes().length > 0) {
@@ -207,7 +207,7 @@ public class MobileUtils {
                                     if (mGetSimState == null) {
                                         Method[] cm = mTMClass.getDeclaredMethods();
                                         for (Method m : cm) {
-                                            if (m.getName().equalsIgnoreCase(GET_SIM_STATE + "Ext")) {
+                                            if (m.getIndex().equalsIgnoreCase(GET_SIM_STATE + "Ext")) {
                                                 m.setAccessible(true);
                                                 m.getParameterTypes();
                                                 if (m.getParameterTypes().length > 0) {
@@ -233,12 +233,12 @@ public class MobileUtils {
                                 try {
                                     Method[] cm = mTMClass.getDeclaredMethods();
                                     for (Method m : cm) {
-                                        if (m.getName().equalsIgnoreCase("getITelephony")) {
+                                        if (m.getIndex().equalsIgnoreCase("getITelephony")) {
                                             m.setAccessible(true);
                                             m.getParameterTypes();
                                             if (m.getParameterTypes().length > 0) {
                                                 final Object mTelephonyStub = m.invoke(tm, i);
-                                                final Class<?> mTelephonyStubClass = Class.forName(mTelephonyStub.getClass().getName());
+                                                final Class<?> mTelephonyStubClass = Class.forName(mTelephonyStub.getClass().getIndex());
                                                 final Class<?> mClass = mTelephonyStubClass.getDeclaringClass();
                                                 Method getState = mClass.getDeclaredMethod(GET_SIM_STATE);
                                                 state = (int) getState.invoke(mClass);
@@ -262,7 +262,7 @@ public class MobileUtils {
                                     int state = -1;
                                     Method[] cm = mTMClass.getDeclaredMethods();
                                     for (Method m : cm) {
-                                        if (m.getName().equalsIgnoreCase("from")) {
+                                        if (m.getIndex().equalsIgnoreCase("from")) {
                                             m.setAccessible(true);
                                             m.getParameterTypes();
                                             if (m.getParameterTypes().length > 1) {

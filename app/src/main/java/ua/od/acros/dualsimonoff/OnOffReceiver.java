@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 
+import java.util.Calendar;
+
 public class OnOffReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -16,6 +18,8 @@ public class OnOffReceiver extends BroadcastReceiver {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
 
+        int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        DaysOfWeek days = null;
         SharedPreferences prefs = context.getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
         String sim = intent.getStringExtra("sim");
         boolean action = intent.getBooleanExtra("action", true);
@@ -25,6 +29,7 @@ public class OnOffReceiver extends BroadcastReceiver {
         int mode = 0;
         switch (sim) {
             case "sim1":
+                days = new DaysOfWeek(prefs.getInt("days1", 0));
                 if (simState[1]) {
                     if (action)
                         mode = prefs.getInt("on", 0);
@@ -39,6 +44,7 @@ public class OnOffReceiver extends BroadcastReceiver {
                 prefs.edit().putBoolean("sim1_state", action).apply();
                 break;
             case "sim2":
+                days = new DaysOfWeek(prefs.getInt("days2", 0));
                 if (simState[0]) {
                     if (action)
                         mode = prefs.getInt("on", 0);
@@ -53,16 +59,18 @@ public class OnOffReceiver extends BroadcastReceiver {
                 prefs.edit().putBoolean("sim2_state", action).apply();
                 break;
         }
-        Intent localIntent;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Settings.System.putInt(context.getContentResolver(), "dual_sim_mode_setting", mode);
-            localIntent = new Intent("android.intent.action.DUAL_SIM_MODE");
-        } else {
-            Settings.System.putInt(context.getContentResolver(), "msim_mode_setting", mode);
-            localIntent = new Intent("android.intent.action.MSIM_MODE");
+        if (days != null && days.getSetDays().contains(dayOfWeek)) {
+            Intent localIntent;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                Settings.System.putInt(context.getContentResolver(), "dual_sim_mode_setting", mode);
+                localIntent = new Intent("android.intent.action.DUAL_SIM_MODE");
+            } else {
+                Settings.System.putInt(context.getContentResolver(), "msim_mode_setting", mode);
+                localIntent = new Intent("android.intent.action.MSIM_MODE");
+            }
+            localIntent.putExtra("mode", mode);
+            context.sendBroadcast(localIntent);
         }
-        localIntent.putExtra("mode", mode);
-        context.sendBroadcast(localIntent);
 
         if (wl.isHeld())
             wl.release();
