@@ -1,5 +1,6 @@
 package ua.od.acros.dualsimonoff;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChooseDaysDialog.ChooseDaysDialogClosedListener {
 
     private ViewPager mViewPager;
 
@@ -120,5 +121,25 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void OnDialogClosed(String sim, boolean state, int bitSet) {
+        String key = "";
+        switch (sim) {
+            case "sim1":
+                if (state)
+                    key = "days1on";
+                else
+                    key = "days1off";
+                break;
+            case "sim2":
+                if (state)
+                    key = "days2on";
+                else
+                    key = "days2off";
+                break;
+        }
+        getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE).edit().putInt(key, bitSet).apply();
     }
 }

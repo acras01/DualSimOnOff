@@ -19,47 +19,59 @@ public class OnOffReceiver extends BroadcastReceiver {
         wl.acquire();
 
         int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        DaysOfWeek days = null;
         SharedPreferences prefs = context.getSharedPreferences("ua.od.acros.dualsimonoff_preferences", Context.MODE_PRIVATE);
         String sim = intent.getStringExtra("sim");
         boolean action = intent.getBooleanExtra("action", true);
-        boolean[] simState = MobileUtils.getSimState(context.getApplicationContext());
-        prefs.edit().putBoolean("sim1_state", simState[0]).apply();
-        prefs.edit().putBoolean("sim2_state", simState[1]).apply();
-        int mode = 0;
+        String key = "";
         switch (sim) {
             case "sim1":
-                days = new DaysOfWeek(prefs.getInt("days1", 0));
-                if (simState[1]) {
-                    if (action)
-                        mode = prefs.getInt("on", 0);
-                    else
-                        mode = prefs.getInt("sim2", 0);
-                } else {
-                    if (action)
-                        mode = prefs.getInt("sim1", 0);
-                    else
-                        mode = prefs.getInt("off", 0);
-                }
-                prefs.edit().putBoolean("sim1_state", action).apply();
+                if (action)
+                    key = "days1on";
+                else
+                    key = "days1off";
                 break;
             case "sim2":
-                days = new DaysOfWeek(prefs.getInt("days2", 0));
-                if (simState[0]) {
-                    if (action)
-                        mode = prefs.getInt("on", 0);
-                    else
-                        mode = prefs.getInt("sim1", 0);
-                } else {
-                    if (action)
-                        mode = prefs.getInt("sim2", 0);
-                    else
-                        mode = prefs.getInt("off", 0);
-                }
-                prefs.edit().putBoolean("sim2_state", action).apply();
+                if (action)
+                    key = "days2on";
+                else
+                    key = "days2off";
                 break;
         }
-        if (days != null && days.getSetDays().contains(dayOfWeek)) {
+        if (new DaysOfWeek(prefs.getInt(key, 0)).getSetDays().contains(dayOfWeek)) {
+            boolean[] simState = MobileUtils.getSimState(context.getApplicationContext());
+            prefs.edit().putBoolean("sim1_state", simState[0]).apply();
+            prefs.edit().putBoolean("sim2_state", simState[1]).apply();
+            int mode = 0;
+            switch (sim) {
+                case "sim1":
+                    if (simState[1]) {
+                        if (action)
+                            mode = prefs.getInt("on", 0);
+                        else
+                            mode = prefs.getInt("sim2", 0);
+                    } else {
+                        if (action)
+                            mode = prefs.getInt("sim1", 0);
+                        else
+                            mode = prefs.getInt("off", 0);
+                    }
+                    prefs.edit().putBoolean("sim1_state", action).apply();
+                    break;
+                case "sim2":
+                    if (simState[0]) {
+                        if (action)
+                            mode = prefs.getInt("on", 0);
+                        else
+                            mode = prefs.getInt("sim1", 0);
+                    } else {
+                        if (action)
+                            mode = prefs.getInt("sim2", 0);
+                        else
+                            mode = prefs.getInt("off", 0);
+                    }
+                    prefs.edit().putBoolean("sim2_state", action).apply();
+                    break;
+            }
             Intent localIntent;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 Settings.System.putInt(context.getContentResolver(), "dual_sim_mode_setting", mode);

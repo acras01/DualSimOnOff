@@ -1,6 +1,5 @@
 package ua.od.acros.dualsimonoff;
 
-import android.view.View;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -52,6 +52,13 @@ public class ChooseDaysDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final List<DayItem> dayItems = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            DaysOfWeek days = new DaysOfWeek(bitSet);
+            DayItem dayItem = new DayItem(DaysOfWeek.DAYS_BITS.get(i), DaysOfWeek.DAYS_OF_WEEK.get(i), false);
+            if (days.getSetDays().contains(i + 1))
+                dayItem.setChecked(true);
+            dayItems.add(dayItem);
+        }
         final CustomListAdapter adapter = new CustomListAdapter(mContext, R.layout.days_list_row, dayItems);
         final AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle("Choose days")
@@ -71,6 +78,7 @@ public class ChooseDaysDialog extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         ChooseDaysDialogClosedListener listener = (ChooseDaysDialogClosedListener) getActivity();
+                        bitSet = 0;
                         for (DayItem dayItem : adapter.getList()) {
                             if (dayItem.isChecked())
                                 bitSet += dayItem.index;

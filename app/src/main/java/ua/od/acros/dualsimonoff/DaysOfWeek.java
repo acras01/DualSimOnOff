@@ -17,8 +17,11 @@ package ua.od.acros.dualsimonoff;
 
 import android.content.Context;
 import java.text.DateFormatSymbols;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
+
 /*
  * Days of week code as a single int.
  * 0x00: no checkBox
@@ -38,6 +41,11 @@ public final class DaysOfWeek {
     public static final int ALL_DAYS_SET = 0x7f;
     // Value when no days are set
     public static final int NO_DAYS_SET = 0;
+
+    public static final List<String> DAYS_OF_WEEK = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday");
+
+    public static final List<Integer> DAYS_BITS = Arrays.asList(0x40, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20);
 
     /**
      * Need to have monday start at index 0 to be backwards compatible. This converts

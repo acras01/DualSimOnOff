@@ -17,11 +17,11 @@ import android.widget.AdapterView;
 import org.joda.time.DateTime;
 
 public class OnOffFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
-        SharedPreferences.OnSharedPreferenceChangeListener, ChooseDaysDialog.ChooseDaysDialogClosedListener {
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private AppCompatSpinner sim1;
-    private AppCompatButton b1, b2, b3, b4;
+    private AppCompatButton b1, b2, b3, b4, b5, b6, b7, b8;
     private SharedPreferences prefs;
 
     private final String SIM1 = "sim1_sel";
@@ -56,22 +56,38 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
         b3.setText(prefs.getString("sim2on_time", "00:00"));
         b4 = (AppCompatButton) view.findViewById(R.id.sim2off);
         b4.setText(prefs.getString("sim2off_time", "00:00"));
+        b5 = (AppCompatButton) view.findViewById(R.id.days1on);
+        b6 = (AppCompatButton) view.findViewById(R.id.days1off);
+        b7 = (AppCompatButton) view.findViewById(R.id.days2on);
+        b8 = (AppCompatButton) view.findViewById(R.id.days2off);
         b1.setEnabled(false);
         b2.setEnabled(false);
         b3.setEnabled(false);
         b4.setEnabled(false);
+        b5.setEnabled(false);
+        b6.setEnabled(false);
+        b7.setEnabled(false);
+        b8.setEnabled(false);
         if (prefs.getInt(SIM1, 0) == 1) {
             b1.setEnabled(true);
             b2.setEnabled(true);
+            b5.setEnabled(true);
+            b6.setEnabled(true);
         }
         if (prefs.getInt(SIM2, 0) == 1) {
             b3.setEnabled(true);
             b4.setEnabled(true);
+            b7.setEnabled(true);
+            b8.setEnabled(true);
         }
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
+        b5.setOnClickListener(this);
+        b6.setOnClickListener(this);
+        b7.setOnClickListener(this);
+        b8.setOnClickListener(this);
         sim1.setOnItemSelectedListener(this);
         sim2.setOnItemSelectedListener(this);
 
@@ -128,7 +144,7 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
                 dialog = "days";
                 bitSet = days1on.getBitSet();
                 break;
-            case R.id.days10ff:
+            case R.id.days1off:
                 sim = "sim1";
                 action = false;
                 dialog = "days";
@@ -155,27 +171,34 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        AppCompatButton butOn;
-        AppCompatButton butOff;
+        AppCompatButton butOn, butOff, butDaysOn, butDaysOff;
         String setting;
         if (parent == sim1) {
             setting = SIM1;
             butOn = b1;
             butOff = b2;
+            butDaysOn = b5;
+            butDaysOff = b6;
         } else {
             setting = SIM2;
             butOn = b3;
             butOff = b4;
+            butDaysOn = b7;
+            butDaysOff = b8;
         }
         prefs.edit().putInt(setting, position).apply();
         switch (position) {
             case 1:
                 butOn.setEnabled(true);
                 butOff.setEnabled(true);
+                butDaysOn.setEnabled(true);
+                butDaysOff.setEnabled(true);
                 break;
             case 0:
                 butOn.setEnabled(false);
                 butOff.setEnabled(false);
+                butDaysOn.setEnabled(false);
+                butDaysOff.setEnabled(false);
                 break;
         }
     }
@@ -192,6 +215,11 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
         b2.setText(prefs.getString("sim1off_time", "00:00"));
         b3.setText(prefs.getString("sim2on_time", "00:00"));
         b4.setText(prefs.getString("sim2off_time", "00:00"));
+
+        days1on = new DaysOfWeek(prefs.getInt("days1on", 0));
+        days1off = new DaysOfWeek(prefs.getInt("days1off", 0));
+        days2on = new DaysOfWeek(prefs.getInt("days2on", 0));
+        days2off = new DaysOfWeek(prefs.getInt("days1off", 0));
 
         AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         DateTime alarmTime;
@@ -268,25 +296,5 @@ public class OnOffFragment extends Fragment implements View.OnClickListener, Ada
             } else
                 am.cancel(pi2On);
         }
-    }
-
-    @Override
-    public void OnDialogClosed(String sim, boolean state, int bitSet) {
-        String key = "";
-        switch (sim) {
-            case "sim1":
-                if (state)
-                    key = "days1on";
-                else
-                    key = "days1off";
-                break;
-            case "sim2":
-                if (state)
-                    key = "days2on";
-                else
-                    key = "days2off";
-                break;
-        }
-        prefs.edit().putInt(key, bitSet).apply();
     }
 }
